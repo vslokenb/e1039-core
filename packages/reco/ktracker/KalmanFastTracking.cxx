@@ -44,6 +44,7 @@ namespace
     static double SAGITTA_TARGET_WIDTH;
     static double Z_TARGET;
     static double Z_DUMP;
+    static double ST3_HM_scaling_factor;
 
     //Track quality cuts
     static double TX_MAX;
@@ -114,6 +115,8 @@ namespace
             SAGITTA_DUMP_WIDTH = rc->get_DoubleFlag("SAGITTA_DUMP_WIDTH");
             Z_TARGET = rc->get_DoubleFlag("Z_TARGET");
             Z_DUMP = rc->get_DoubleFlag("Z_DUMP");
+	    ST3_HM_scaling_factor = rc->get_DoubleFlag("ST3_HM_scaling_factor")
+	    
 
             MUID_REJECTION = rc->get_DoubleFlag("MUID_REJECTION");
             MUID_Z_REF = rc->get_DoubleFlag("MUID_Z_REF");
@@ -1417,6 +1420,11 @@ bool KalmanFastTracking::hodoMask(Tracklet& tracklet)
             double err_x = factor*tracklet.getExpPosErrorX(z_hodo) + xfudge;
             double err_y = factor*tracklet.getExpPosErrorY(z_hodo);
 
+	    if (tracklet.stationID == 4 || tracklet.stationID == 5)
+            {
+                    err_x = ST3_HM_scaling_factor * err_x;
+                    err_y = ST3_HM_scaling_factor * err_y;
+            }
             double x_min = x_mask_min[idx1][idx2] - err_x;
             double x_max = x_mask_max[idx1][idx2] + err_x;
             double y_min = y_mask_min[idx1][idx2] - err_y;
