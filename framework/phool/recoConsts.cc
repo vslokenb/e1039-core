@@ -131,6 +131,8 @@ void recoConsts::set_defaults()
   set_DoubleFlag("SAGITTA_DUMP_CENTER", 1.5);
   set_DoubleFlag("SAGITTA_DUMP_WIDTH", 0.3);
 
+  set_DoubleFlag("ST3_HM_scaling_factor", 1.0);
+
   set_IntFlag("MUID_MINHITS", 1);
   set_DoubleFlag("MUID_REJECTION", 4.);
   set_DoubleFlag("MUID_THE_P0", 0.11825);
